@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>عرض بيانات CSV والتنبؤ</title>
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: #f2f4f8;
+      margin: 0;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .upload-section {
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      max-width: 1000px;
+      width: 100%;
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2a7be4;
+      margin-bottom: 1.5rem;
+    }
+
+    input[type="file"] {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px dashed #ccc;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 1rem;
+      background-color: #fafafa;
+      margin-bottom: 1rem;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      overflow-y: auto;
+      max-height: calc(5 * 48px + 40px);
+      margin-top: 1.5rem;
+      border-radius: 10px;
+      background: white;
+      border: 1px solid #ddd;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+      min-width: 900px;
+    }
+
+    th, td {
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    th {
+      background-color: #f0f2f5;
+      color: #333;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    .predictBtn {
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      background-color: #2a7be4;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .predictBtn:hover {
+      background-color: #1a5bcc;
+    }
+
+    .upload-section {
+      text-align: center;
+    }
+    .upload-section a {
+      text-decoration: none;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="upload-section">
+    <h1>رفع ملف CSV وعرض البيانات</h1>
+    <input type="file" id="csvFile" accept=".csv" onchange="handleFile(event)" />
+    <div class="table-wrapper" id="output"></div>
+    <button class="predictBtn" id="predictBtn" onclick="predict()" disabled>تنبؤ</button>
+  </div>
+  <div class="upload-section sec-page">
+    <a href="http://127.0.0.1:5000/one" class="predictBtn">التحقق من شخص</a>
+  </div>
+
+  <script>
+    let currentData = [];
+    let headers = [];
+    let targetIndex = -1;
+
+    function handleFile(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const text = e.target.result;
+        const rows = text.trim().split('\n').map(row => row.split(';'));
+
+        headers = rows[0].map(h => h.trim());
+        console.log(headers)
+        targetIndex = headers.indexOf('"y"');
+        if (targetIndex !== -1) {
+          headers.splice(targetIndex, 1);
+        }
+
+        currentData = rows.slice(1).map(row => {
+          if (targetIndex !== -1) {
+            row.splice(targetIndex, 1);
+          }
+          return row;
+        });
+
+        console.log(currentData)
+
+        renderTable(headers, currentData);
+        document.getElementById('predictBtn').disabled = false;
+      };
+
+      reader.readAsText(file);
+    }
+
+    function renderTable(headers, data, predictions = null) {
+      let thead = '<thead><tr>' + headers.map(h => `<th>${h}</th>`).join('');
+      if (predictions) {
+        thead += '<th>Prediction</th>';
+      }
+      thead += '</tr></thead>';
+
+      let tbody = '<tbody>';
+      for (let i = 0; i < data.length; i++) {
+        tbody += '<tr>' + data[i].map(cell => `<td>${cell}</td>`).join('');
+        if (predictions) {
+          tbody += `<td>${predictions[i]}</td>`;
+        }
+        tbody += '</tr>';
+      }
+      tbody += '</tbody>';
+
+      const table = document.createElement('table');
+      table.innerHTML = thead + tbody;
+
+      const output = document.getElementById('output');
+      output.innerHTML = '';
+      output.appendChild(table);
+    }
+
+    async function predict() {
+      const predictBtn = document.getElementById('predictBtn');
+      predictBtn.disabled = true;
+      predictBtn.textContent = 'جاري التنبؤ...';
+
+      try {
+        // هنا غير الرابط إلى رابط الـ API الخاص بك
+        const apiUrl = 'http://127.0.0.1:5000/predict';
+
+        // نرسل البيانات بصيغة JSON
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({data: currentData})
+        });
+
+        if (!response.ok) {
+          throw new Error('فشل الاتصال بالـ API');
+        }
+
+        const result = await response.json();
+        // نتوقع أن الـ API يرجع مصفوفة التنبؤات، مثلاً: { predictions: ["yes", "no", ...] }
+
+        renderTable(headers, currentData, result.predictions);
+
+      } catch (error) {
+        alert('حدث خطأ أثناء التنبؤ: ' + error.message);
+      } finally {
+        predictBtn.disabled = false;
+        predictBtn.textContent = 'تنبؤ';
+      }
+    }
+  </script>
+</body>
+</html>

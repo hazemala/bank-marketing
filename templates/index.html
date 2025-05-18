@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>توقّع نجاح الحملة التسويقية للبنك</title>
+  <style>
+    :root {
+      --primary: #4A90E2;
+      --background: #f9fafb;
+      --card-bg: #ffffff;
+      --text-main: #333;
+      --text-label: #555;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: var(--background);
+      margin: 0;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 800px;
+      transition: transform 0.3s;
+    }
+
+    .container:hover {
+      transform: scale(1.01);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.8rem;
+      color: var(--primary);
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      color: var(--text-label);
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 1rem;
+      background-color: var(--primary);
+      color: white;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #357ABD;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>نموذج توقّع نجاح الحملة التسويقية للبنك</h1>
+
+    <div class="form-group">
+      <label for="age">العمر</label>
+      <input type="number" id="age" placeholder="أدخل عمرك">
+    </div>
+
+    <div class="form-group">
+      <label for="job">الوظيفة</label>
+      <select id="job">
+        <option value="">اختر الوظيفة</option>
+        <option value="admin.">إداري</option>
+        <option value="services">خدمات</option>
+        <option value="technician">فني</option>
+        <option value="blue-collar">عامل</option>
+        <option value="student">طالب</option>
+        <option value="retired">متقاعد</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="marital">الحالة الاجتماعية</label>
+      <select id="marital">
+        <option value="">اختر الحالة</option>
+        <option value="single">أعزب</option>
+        <option value="married">متزوج</option>
+        <option value="divorced">مطلّق</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="education">المستوى التعليمي</label>
+      <select id="education">
+        <option value="">اختر المستوى</option>
+        <option value="basic.4y">ابتدائي</option>
+        <option value="basic.9y">إعدادي</option>
+        <option value="high.school">ثانوي</option>
+        <option value="university.degree">جامعي</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="housing">هل لديك قرض سكني؟</label>
+      <select id="housing">
+        <option value="">اختر</option>
+        <option value="yes">نعم</option>
+        <option value="no">لا</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="loan">هل لديك قرض شخصي؟</label>
+      <select id="loan">
+        <option value="">اختر</option>
+        <option value="yes">نعم</option>
+        <option value="no">لا</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="contact">طريقة الاتصال</label>
+      <select id="contact">
+        <option value="">اختر</option>
+        <option value="telephone">هاتف</option>
+        <option value="cellular">محمول</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="month">الشهر الحالي</label>
+      <select id="month">
+        <option value="">اختر الشهر</option>
+        <option value="may">مايو</option>
+        <option value="jun">يونيو</option>
+        <option value="jul">يوليو</option>
+        <option value="aug">أغسطس</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="day_of_week">يوم الأسبوع</label>
+      <select id="day_of_week">
+        <option value="">اختر اليوم</option>
+        <option value="mon">الإثنين</option>
+        <option value="tue">الثلاثاء</option>
+        <option value="wed">الأربعاء</option>
+        <option value="thu">الخميس</option>
+        <option value="fri">الجمعة</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="campaign">عدد الاتصالات الحالية</label>
+      <input type="number" id="campaign" placeholder="مثال: 1">
+    </div>
+
+    <div class="form-group">
+      <label for="pdays">عدد الأيام منذ آخر تواصل</label>
+      <input type="number" id="pdays" placeholder="أدخل عدد الأيام">
+    </div>
+
+    <div class="form-group">
+      <label for="previous">عدد الاتصالات السابقة</label>
+      <input type="number" id="previous" placeholder="أدخل عدد المرات">
+    </div>
+
+    <div class="form-group">
+      <label for="poutcome">نتيجة الحملة السابقة</label>
+      <select id="poutcome">
+        <option value="">اختر النتيجة</option>
+        <option value="success">ناجحة</option>
+        <option value="failure">فاشلة</option>
+        <option value="nonexistent">لم تُجرى</option>
+      </select>
+    </div>
+
+    <button onclick="predict()">تحليل التوقع</button>
+  </div>
+
+<script>
+  async function predict() {
+    const fields = [
+      "age", "job", "marital", "education", "housing",
+      "loan", "contact", "month", "day_of_week", "campaign",
+      "pdays", "previous", "poutcome"
+    ];
+
+    // جمع القيم في مصفوفة
+    const values = fields.map(id => document.getElementById(id).value);
+
+    // التحقق من أن كل القيم ممتلئة
+    if (values.includes("")) {
+      alert("يرجى تعبئة جميع الحقول قبل الإرسال.");
+      return;
+    }
+
+    // إنشاء العنصر الذي سيعرض التوقع
+    let resultDiv = document.getElementById("result");
+    if (!resultDiv) {
+      resultDiv = document.createElement("div");
+      resultDiv.id = "result";
+      resultDiv.style.marginTop = "1rem";
+      resultDiv.style.padding = "1rem";
+      resultDiv.style.borderRadius = "10px";
+      resultDiv.style.textAlign = "center";
+      resultDiv.style.fontSize = "1.2rem";
+      document.querySelector(".container").appendChild(resultDiv);
+    }
+
+    resultDiv.textContent = "جاري التنبؤ...";
+
+    try {
+      const apiUrl = "http://127.0.0.1:5000/predict";  // غيّر هذا بالرابط الحقيقي
+
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: [values] }),  // إرسال مصفوفة داخل data
+      });
+
+      if (!response.ok) {
+        throw new Error("فشل الاتصال بالخادم");
+      }
+
+      const result = await response.json();
+      console.log(result.predictions[0])
+
+      if (result.predictions[0] === "yes") {
+        resultDiv.textContent = "✅ يتوقّع نجاح الحملة!";
+        resultDiv.style.backgroundColor = "#d4edda";
+        resultDiv.style.color = "#155724";
+      } else {
+        resultDiv.textContent = "❌ يتوقّع فشل الحملة.";
+        resultDiv.style.backgroundColor = "#f8d7da";
+        resultDiv.style.color = "#721c24";
+      }
+    } catch (error) {
+      resultDiv.textContent = "حدث خطأ: " + error.message;
+      resultDiv.style.backgroundColor = "#fff3cd";
+      resultDiv.style.color = "#856404";
+    }
+  }
+</script>
+
+</body>
+</html>

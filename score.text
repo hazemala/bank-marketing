@@ -1,0 +1,22 @@
+log ---> 429 ---> 453
+knn ---> 348
+nb ---> 425
+linearsvc ---> 423 ---> 450
+svc ---> 
+dt ---> 449
+
+Oversample 
+log ---> 446
+knn ---> 340 ---> 353
+nb ---> 427
+linearsvc ---> 430
+svc ---> 
+dt ---> 464 ---> 484
+
+Undersample 
+log ---> 444
+knn ---> 358 ---> 445
+nb ---> 430
+linearsvc ---> 427
+svc ---> 
+dt ---> 428 ---> 462
