@@ -5,3 +5,5 @@ joblib
 imbalanced-learn
 flask
 gunicorn
+category_encoders
+kneed
