@@ -4,3 +4,4 @@ numpy
 joblib
 imbalanced-learn
 flask
+gunicorn
