@@ -6,6 +6,7 @@ import joblib
 app = Flask(__name__)
 
 model = joblib.load('model.pkl')
+clustrer = joblib.load('clustering_model.pkl')
 
 @app.route('/')
 def home():
@@ -44,9 +45,6 @@ def predict():
         df = pd.concat([df,nan_df],axis=1)
 
     df = df.replace('unknown',np.nan)
-    
-    print(df)
-    print(df.dtypes)
 
     def get_season(month):
         if month in ['mar', 'apr', 'may']:
@@ -83,9 +81,14 @@ def predict():
         lambda row: row["campaign"] / (row["previous"] + 1), axis=1
     )
 
-    predictions = model.predict(df)
-    print(predictions)
-    
+    clusters_feat = clustrer.predict(df)
+
+    df_new = np.c_[df,clusters_feat]
+
+    df_new_df = pd.DataFrame(df_new,index=df.index,columns=list(df.columns) + ['clusters'])
+
+    predictions = model.predict(df_new_df)
+
     return jsonify({"predictions": ['yes' if i == 1 else 'no' for i in predictions]})
 
 if __name__ == "__main__":
